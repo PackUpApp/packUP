@@ -2,24 +2,18 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Image, Platform, StyleSheet } from "react-native";
 
 export default function HomeScreen() {
-  const [response, setResponse] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  async function load() {
-    await new Promise(res => setTimeout(res, 5000));
-    const res = await fetch("http://localhost:8083/api/sync");
-    const text = await res.text();
-    setResponse(text);
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    load();
-  }, []);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["sync"],
+    async queryFn() {
+      const res = await fetch("http://localhost:8083/api/sync");
+      const text = await res.text();
+      return text;
+    },
+  });
 
   return (
     <ParallaxScrollView
@@ -30,7 +24,7 @@ export default function HomeScreen() {
         <ThemedText type="title">packUP!</ThemedText>
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">{isLoading ? "Loading…" : response}</ThemedText>
+        <ThemedText type="title">{isPending ? "Loading…" : error ? "An error occurred" : `RQ: ${data}`}</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
