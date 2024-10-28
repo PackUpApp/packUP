@@ -3,7 +3,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useEffect, useState } from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { Image, Platform, StyleSheet, Button } from "react-native";
 
 export default function HomeScreen() {
   const [response, setResponse] = useState<string | null>(null);
@@ -41,6 +41,16 @@ export default function HomeScreen() {
           open developer tools.
         </ThemedText>
       </ThemedView>
+      <ThemedView style={styles.button}>
+      
+      <Button
+        onPress = {() => console.log("Button Pressed")}
+        title="first button"
+        color="#841584"
+        
+        accessibilityLabel="Learn more about this purple button"
+      />
+      </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
         <ThemedText>Tap the Explore tab to learn more about what's included in this starter app.</ThemedText>
@@ -55,8 +65,15 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
+    
+
+
   );
 }
+
+
+
+
 
 const styles = StyleSheet.create({
   titleContainer: {
@@ -75,4 +92,8 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
+
+  button: {
+    padding: 50,
+  }
 });
