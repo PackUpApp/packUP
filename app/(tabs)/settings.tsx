@@ -1,13 +1,30 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useQuery } from "@tanstack/react-query";
 
 export default function TabTwoScreen() {
+  const { isPending, error, data } = useQuery({
+    queryKey: ["sync"],
+    async queryFn() {
+      const res = await fetch("http://localhost:8083/user/b879bc2a-8817-47e6-ab12-4ad86785223e", {
+        headers: new Headers({
+          Authorization: "Bearer 123",
+        }),
+      });
+
+      if (!res.ok) throw new Error(res.statusText);
+
+      const text = await res.json();
+      return text;
+    },
+  });
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -18,7 +35,11 @@ export default function TabTwoScreen() {
       </ThemedView>
       <Collapsible title="Account">
         <ThemedText>
-          You are not logged in! 
+          {isPending
+            ? "Loading…"
+            : error
+              ? "An error occurred"
+              : `Welcome back ${data.fname} ${data.lname}!\nEmail: ${data.email}`}
         </ThemedText>
       </Collapsible>
       <Collapsible title="Appearance">
