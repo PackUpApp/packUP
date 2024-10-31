@@ -9,8 +9,15 @@ export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
     queryKey: ["sync"],
     async queryFn() {
-      const res = await fetch("http://localhost:8083/api/sync");
-      const text = await res.text();
+      const res = await fetch("http://localhost:8083/user/b879bc2a-8817-47e6-ab12-4ad86785223e", {
+        headers: new Headers({
+          Authorization: "Bearer 123",
+        }),
+      });
+
+      if (!res.ok) throw new Error(res.statusText);
+
+      const text = await res.json();
       return text;
     },
   });
@@ -24,7 +31,9 @@ export default function HomeScreen() {
         <ThemedText type="title">packUP!</ThemedText>
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">{isPending ? "Loading…" : error ? "An error occurred" : `RQ: ${data}`}</ThemedText>
+        <ThemedText type="title">
+          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
+        </ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
