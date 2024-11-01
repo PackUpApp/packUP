@@ -1,12 +1,14 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Image, StyleSheet } from "react-native";
-
+import { Platform } from "react-native";
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useQuery } from "@tanstack/react-query";
+import * as Device from "expo-device";
+import { version } from "../../package.json";
 
 export default function TabTwoScreen() {
   const { isPending, error, data } = useQuery({
@@ -67,22 +69,12 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
-      {/* <Collapsible title="Animations">
+      <Collapsible title="About">
         <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText> library to create a waving hand
-          animation.
+          Running on {Device.manufacturer} {Device.modelName} {"\n"}
+          packUP version {version}
         </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText> component provides a
-              parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible> */}
+      </Collapsible>
     </ParallaxScrollView>
   );
 }
