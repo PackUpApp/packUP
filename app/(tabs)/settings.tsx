@@ -9,6 +9,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { useQuery } from "@tanstack/react-query";
 import * as Device from "expo-device";
 import { version } from "../../package.json";
+import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabTwoScreen() {
   const { isPending, error, data } = useQuery({
@@ -27,6 +28,7 @@ export default function TabTwoScreen() {
     },
   });
 
+  const colorScheme = useColorScheme();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -46,28 +48,19 @@ export default function TabTwoScreen() {
       </Collapsible>
       <Collapsible title="Appearance">
         <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{" "}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
+          Your current theme is {colorScheme}. {"\n"}
+          You can change this via your phone's settings.
         </ThemedText>
       </Collapsible>
       <Collapsible title="Privacy">
         <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for different screen densities
+          Privacy policy coming soon.
         </ThemedText>
-        <Image source={require("@/assets/images/react-logo.png")} style={{ alignSelf: "center" }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
       <Collapsible title="Cache">
         <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{" "}
-          <ThemedText style={{ fontFamily: "SpaceMono" }}>custom fonts such as this one.</ThemedText>
+          packUP does not do caching (screw Redis).
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
       </Collapsible>
       <Collapsible title="About">
         <ThemedText>
