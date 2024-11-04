@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
 import { useQuery } from "@tanstack/react-query";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -24,11 +24,10 @@ export default function HomeScreen() {
   });
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{light: "black",  dark: "white" }}
-      headerImage={<Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.reactLogo} />}
-
-    >
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        <Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.headerImage} />
+      </ThemedView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Start New Trip</ThemedText>
       </ThemedView>
@@ -42,7 +41,7 @@ export default function HomeScreen() {
           <Text style={styles.buttonText}>Create New Trip</Text>
         </TouchableOpacity>
       </ThemedView>
-    </ParallaxScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -51,8 +50,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    bottom: -250,
   },
-  stepContainer: {
+
+  safeArea: {},
+
+  Container: {
+    flex: 1,
     gap: 8,
     marginBottom: 8,
   },
@@ -61,10 +65,22 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 50,
-    position: "absolute",
+  },
+
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+
+  headerImage: {
+    width: "100%",
+    height: 200,
+    marginBottom: -200,
   },
 
   button: {
+    bottom: -500,
     padding: 15,
     backgroundColor: "#add8e6",
     borderRadius: 30,

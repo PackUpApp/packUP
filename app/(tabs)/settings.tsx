@@ -47,8 +47,11 @@ export default function TabTwoScreen() {
       </Collapsible>
       <Collapsible title="Appearance">
         <ThemedText>
-          Current theme is: 
-          <ThemedText type="defaultSemiBold"> {colorScheme} {"\n"}</ThemedText>
+          Current theme is:
+          <ThemedText type="defaultSemiBold">
+            {" "}
+            {colorScheme} {"\n"}
+          </ThemedText>
           You can change this via your phone's settings.
         </ThemedText>
       </Collapsible>
