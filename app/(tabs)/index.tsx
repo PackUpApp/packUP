@@ -2,24 +2,26 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Image, Platform, StyleSheet, Button, Text,TouchableOpacity,Pressable } from "react-native";
 
 export default function HomeScreen() {
-  const [response, setResponse] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["sync"],
+    async queryFn() {
+      const res = await fetch("http://localhost:8083/user/b879bc2a-8817-47e6-ab12-4ad86785223e", {
+        headers: new Headers({
+          Authorization: "Bearer 123",
+        }),
+      });
 
-  async function load() {
-    await new Promise(res => setTimeout(res, 5000));
-    const res = await fetch("http://localhost:8083/api/sync");
-    const text = await res.text();
-    setResponse(text);
-    setIsLoading(false);
-  }
+      if (!res.ok) throw new Error(res.statusText);
 
-  useEffect(() => {
-    load();
-  }, []);
+      const text = await res.json();
+      return text;
+    },
+  });
 
   return (
     <ParallaxScrollView
@@ -32,12 +34,10 @@ export default function HomeScreen() {
       </ThemedView>
 
 
-
-
-
-
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">{isLoading ? "Have fun!" : response}</ThemedText>
+        <ThemedText type="title">
+          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
+        </ThemedText>
         <HelloWave />
       </ThemedView>
 
