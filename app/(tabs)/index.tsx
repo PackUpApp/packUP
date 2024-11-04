@@ -3,7 +3,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useEffect, useState } from "react";
-import { Image, Platform, StyleSheet, Button } from "react-native";
+import { Image, Platform, StyleSheet, Button, Text,TouchableOpacity,Pressable } from "react-native";
 
 export default function HomeScreen() {
   const [response, setResponse] = useState<string | null>(null);
@@ -29,10 +29,17 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">packUP!</ThemedText>
       </ThemedView>
+
+
+
+
+
+
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">{isLoading ? "Loading…" : response}</ThemedText>
         <HelloWave />
       </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -41,15 +48,16 @@ export default function HomeScreen() {
           open developer tools.
         </ThemedText>
       </ThemedView>
+
+
       <ThemedView style={styles.button}>
-      
-      <Button
-        onPress = {() => console.log("Button Pressed")}
-        title="first button"
-        color="#841584"
-        
-        accessibilityLabel="Learn more about this purple button"
-      />
+      <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>Create New Trip</Text>
+      </TouchableOpacity>
+   
+
+
+
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
@@ -94,6 +102,18 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    padding: 50,
+    padding: 15,
+    backgroundColor: '#add8e6',
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: 'black',
+   
   }
+
+  
 });
