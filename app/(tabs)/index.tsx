@@ -13,7 +13,7 @@ export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
     queryKey: ["sync"],
     async queryFn() {
-      const res = await fetch("http://localhost:8083/user/b879bc2a-8817-47e6-ab12-4ad86785223e", {
+      const res = await fetch("http://127.0.0.1:7349/user/cfd8c872-f728-4f3b-bb77-e95f49693903", {
         headers: new Headers({
           Authorization: "Bearer 123",
         }),

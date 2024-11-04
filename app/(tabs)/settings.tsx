@@ -1,8 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Image, StyleSheet } from "react-native";
-import { Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -15,7 +13,7 @@ export default function TabTwoScreen() {
   const { isPending, error, data } = useQuery({
     queryKey: ["sync"],
     async queryFn() {
-      const res = await fetch("http://localhost:8083/user/b879bc2a-8817-47e6-ab12-4ad86785223e", {
+      const res = await fetch("http://127.0.0.1:7349/user/cfd8c872-f728-4f3b-bb77-e95f49693903", {
         headers: new Headers({
           Authorization: "Bearer 123",
         }),
@@ -42,13 +40,14 @@ export default function TabTwoScreen() {
           {isPending
             ? "Loading…"
             : error
-              ? "An error occurred"
+              ? "An error occurred!\n" + error
               : `Welcome back ${data.fname} ${data.lname}!\nEmail: ${data.email}`}
         </ThemedText>
       </Collapsible>
       <Collapsible title="Appearance">
         <ThemedText>
-          Your current theme is {colorScheme}. {"\n"}
+          Current theme is: 
+          <ThemedText type="defaultSemiBold"> {colorScheme} {"\n"}</ThemedText>
           You can change this via your phone's settings.
         </ThemedText>
       </Collapsible>
