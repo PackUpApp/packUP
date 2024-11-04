@@ -1,19 +1,20 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet } from "react-native";
 import { Collapsible } from "@/components/Collapsible";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { apiBaseUrl } from "@/constants/Host";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useQuery } from "@tanstack/react-query";
 import * as Device from "expo-device";
+import { StyleSheet } from "react-native";
 import { version } from "../../package.json";
-import { useColorScheme } from "@/hooks/useColorScheme";
 
 export default function TabTwoScreen() {
   const { isPending, error, data } = useQuery({
     queryKey: ["sync"],
     async queryFn() {
-      const res = await fetch("http://127.0.0.1:7349/user/cfd8c872-f728-4f3b-bb77-e95f49693903", {
+      const res = await fetch(`${apiBaseUrl}/user/b879bc2a-8817-47e6-ab12-4ad86785223e`, {
         headers: new Headers({
           Authorization: "Bearer 123",
         }),
@@ -46,20 +47,19 @@ export default function TabTwoScreen() {
       </Collapsible>
       <Collapsible title="Appearance">
         <ThemedText>
-          Current theme is: 
-          <ThemedText type="defaultSemiBold"> {colorScheme} {"\n"}</ThemedText>
+          Current theme is:
+          <ThemedText type="defaultSemiBold">
+            {" "}
+            {colorScheme} {"\n"}
+          </ThemedText>
           You can change this via your phone's settings.
         </ThemedText>
       </Collapsible>
       <Collapsible title="Privacy">
-        <ThemedText>
-          Privacy policy coming soon.
-        </ThemedText>
+        <ThemedText>Privacy policy coming soon.</ThemedText>
       </Collapsible>
       <Collapsible title="Cache">
-        <ThemedText>
-          packUP does not do caching (screw Redis).
-        </ThemedText>
+        <ThemedText>packUP does not do caching (screw Redis).</ThemedText>
       </Collapsible>
       <Collapsible title="About">
         <ThemedText>
