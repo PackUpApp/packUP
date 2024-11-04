@@ -29,16 +29,13 @@ export default function HomeScreen() {
       headerImage={<Image source={require("@/assets/images/partial-react-logo.png")} style={styles.reactLogo} />}
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">packUP!</ThemedText>
+        <ThemedText type="title">Start New Trip</ThemedText>
       </ThemedView>
 
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">
-          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
-        </ThemedText>
+        <ThemedText type="title">Have fun on your trip!</ThemedText>
         <HelloWave />
       </ThemedView>
-
       <ThemedView style={styles.button}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Create New Trip</Text>
