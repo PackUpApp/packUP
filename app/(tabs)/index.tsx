@@ -3,7 +3,8 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useQuery } from "@tanstack/react-query";
-import { Image, Platform, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, Platform, StyleSheet, Button, Text,TouchableOpacity,Pressable } from "react-native";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -30,12 +31,19 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">packUP!</ThemedText>
       </ThemedView>
+
+
+
+
+
+
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">
           {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
         </ThemedText>
         <HelloWave />
       </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -43,6 +51,17 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">{Platform.select({ ios: "cmd + d", android: "cmd + m" })}</ThemedText> to
           open developer tools.
         </ThemedText>
+      </ThemedView>
+
+
+      <ThemedView style={styles.button}>
+      <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>Create New Trip</Text>
+      </TouchableOpacity>
+   
+
+
+
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
@@ -58,8 +77,15 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
+    
+
+
   );
 }
+
+
+
+
 
 const styles = StyleSheet.create({
   titleContainer: {
@@ -78,4 +104,20 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
+
+  button: {
+    padding: 15,
+    backgroundColor: '#add8e6',
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    color: 'black',
+   
+  }
+
+  
 });
