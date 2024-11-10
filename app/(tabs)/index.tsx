@@ -3,25 +3,85 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
-import { useQuery } from "@tanstack/react-query";
+import { Session, User } from "@/utils/model";
+import { loginWithGoogle } from "@/utils/oauth";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export default function HomeScreen() {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["sync"],
+  const [skipFetch, setSkipFetch] = useState(false);
+  const [loginUser, setLoginUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    getItemAsync("session").then(value => {
+      if (!value) return;
+      const session = Session.safeParse(JSON.parse(value));
+      if (!session.success) return console.error(session.error);
+      if (session.data.expires.getTime() < Date.now()) return;
+      setSession(session.data);
+    });
+  }, []);
+
+  const {
+    isPending,
+    error,
+    data: user,
+  } = useQuery({
+    queryKey: ["user"],
     async queryFn() {
-      const res = await fetch(`${apiBaseUrl}/user/b879bc2a-8817-47e6-ab12-4ad86785223e`, {
+      if (skipFetch && loginUser) {
+        setSkipFetch(false);
+        return loginUser;
+      }
+
+      const res = await fetch(`${apiBaseUrl}/user/profile`, {
         headers: new Headers({
-          Authorization: "Bearer 123",
+          Authorization: session!.token,
         }),
       });
 
       if (!res.ok) throw new Error(res.statusText);
 
-      const text = await res.json();
-      return text;
+      const user = (await res.json()) as User;
+      return user;
     },
+    enabled: !!session,
   });
+
+  const queryClient = useQueryClient();
+
+  const handleSignIn = async () => {
+    try {
+      setSkipFetch(true);
+      const result = await loginWithGoogle();
+      setLoginUser(result.user);
+      await setItemAsync("session", JSON.stringify(result.session));
+      setSession(result.session);
+    } catch (e: unknown) {
+      console.error("Failed to sign in with Google", e);
+    }
+  };
+
+  const logout = () => {
+    deleteItemAsync("session").then(() => {
+      setSession(null);
+      setLoginUser(null);
+    });
+  };
+
+  // Use useEffect to respond to state changes
+  useEffect(() => {
+    if (session === null && loginUser === null) {
+      queryClient.removeQueries({
+        exact: true,
+        queryKey: ["user"],
+      });
+      setSession(null);
+    }
+  }, [session, loginUser, queryClient]);
 
   return (
     <ParallaxScrollView
@@ -34,7 +94,7 @@ export default function HomeScreen() {
 
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">
-          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
+          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${user.fname} ${user.lname}!`}
         </ThemedText>
         <HelloWave />
       </ThemedView>
@@ -42,6 +102,18 @@ export default function HomeScreen() {
       <ThemedView style={styles.button}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Create New Trip</Text>
+        </TouchableOpacity>
+      </ThemedView>
+
+      <ThemedView style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+          <Text style={styles.buttonText}>Sign in with Google</Text>
+        </TouchableOpacity>
+      </ThemedView>
+
+      <ThemedView style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={logout}>
+          <Text style={styles.buttonText}>Log out</Text>
         </TouchableOpacity>
       </ThemedView>
     </ParallaxScrollView>
