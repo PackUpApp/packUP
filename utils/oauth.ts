@@ -1,4 +1,5 @@
 import { apiBaseUrl } from "@/constants/Host";
+import Constants from "expo-constants";
 import { openAuthSessionAsync } from "expo-web-browser";
 import { Session, User } from "./model";
 
@@ -58,6 +59,6 @@ export const urls = {
     return "";
   },
   google(state: string) {
-    return `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&state=${state}&scope=openid%20email%20profile&response_type=code&client_id=237029104535-geupqsqu09hr929gnce7hochoutqjm0l.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8083%2Fauth%2Fgoogle&prompt=select_account`;
+    return `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&state=${state}&scope=openid%20email%20profile&response_type=code&client_id=${Constants.expoConfig?.extra?.google_client_id}&redirect_uri=${Constants.expoConfig?.extra?.redirect_uri}&prompt=select_account`;
   },
 } satisfies Record<string, ProviderURL>;
