@@ -3,8 +3,11 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Platform, StyleSheet, Button, Text,TouchableOpacity,Pressable } from "react-native";
+import { Image, Platform, StyleSheet, Button, Text,TouchableOpacity,Pressable, View, 
+  SafeAreaView, 
+} from "react-native";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -23,12 +26,14 @@ export default function HomeScreen() {
     },
   });
 
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{light: "black",  dark: "white" }}
-      headerImage={<Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.reactLogo} />}
 
-    >
+  return (
+    <SafeAreaView style={styles.safeArea}>
+    <ThemedView
+      
+      style={styles.container}>
+      <Image source={require('@/assets/images/PackUp-Logo.png')} style={styles.headerImage} />
+    
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Start New Trip</ThemedText>
       </ThemedView>
@@ -42,18 +47,13 @@ export default function HomeScreen() {
       </ThemedView>
 
 
-      
-
-
       <ThemedView style={styles.button}>
-      <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>Create New Trip</Text>
-      </TouchableOpacity>
+      <Link href ="./not found" style ={styles.buttonText}> Create New Trip </Link>
       </ThemedView>
 
       
-    </ParallaxScrollView>
-    
+    </ThemedView>
+    </SafeAreaView>
 
 
   );
@@ -68,25 +68,53 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    bottom: -250
+    
   },
-  stepContainer: {
+
+  safeArea: {
+
+
+  },
+
+  Container: {
+    flex: 1,
     gap: 8,
     marginBottom: 8,
+    
   },
   reactLogo: {
     height: 178,
     width: 290,
-    bottom: 0,
+    bottom: -30,
     left: 50,
-    position: "absolute",
+   
   },
 
-  button: {
+  container: {
     
-    padding: 15,
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: 'white',
+  },
+
+  headerImage: {
+    width: '100%', 
+    height: 200, 
+    marginBottom: -200, 
+  
+
+  },
+
+  
+
+  button: {
+    bottom: -500,
+    padding: 35,
     backgroundColor: '#add8e6',
     borderRadius: 30,
     alignItems: 'center',
+    
   },
 
   buttonText: {
@@ -96,6 +124,8 @@ const styles = StyleSheet.create({
     color: 'black',
    
   }
+
+
 
   
 });
