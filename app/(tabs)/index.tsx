@@ -34,10 +34,9 @@ export default function HomeScreen() {
           <ThemedText type="title">
             {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
           </ThemedText>
-          <HelloWave />
         </ThemedView>
         <ThemedView style={styles.button}>
-          <Link href="./not found" style={styles.buttonText}>
+          <Link href="./questionnaire" style={styles.buttonText}>
             {" "}
             Create New Trip{" "}
           </Link>
@@ -50,15 +49,10 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   titleContainer: {
     backgroundColor: "clear",
- 
-   
     bottom: -250,
   },
-
   safeArea: {
-    flex: 1,
-    backgroundColor: '#000000',
-  
+    
   },
 
   Container: {
