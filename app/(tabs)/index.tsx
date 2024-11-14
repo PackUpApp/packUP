@@ -49,13 +49,17 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    backgroundColor: "clear",
+ 
+   
     bottom: -250,
   },
 
-  safeArea: {},
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#000000',
+  
+  },
 
   Container: {
     flex: 1,
@@ -65,14 +69,14 @@ const styles = StyleSheet.create({
   reactLogo: {
     height: 178,
     width: 290,
-    bottom: 0,
+    bottom: -30,
     left: 50,
   },
 
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    
   },
 
   headerImage: {
