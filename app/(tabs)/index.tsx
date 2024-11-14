@@ -49,16 +49,16 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    backgroundColor: "clear",
+ 
+   
     bottom: -250,
   },
 
   safeArea: {
     flex: 1,
     backgroundColor: '#000000',
-    
+  
   },
 
   Container: {
