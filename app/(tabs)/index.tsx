@@ -1,10 +1,10 @@
 import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
 import { useQuery } from "@tanstack/react-query";
-import { Image, StyleSheet, Text, TouchableOpacity, SafeAreaView } from "react-native";
+import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -27,19 +27,21 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.safeArea}>
       <ThemedView style={styles.container}>
         <Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.headerImage} />
-      </ThemedView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Start New Trip</ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Have fun on your trip!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.button}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create New Trip</Text>
-        </TouchableOpacity>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Start New Trip</ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">
+            {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
+          </ThemedText>
+          <HelloWave />
+        </ThemedView>
+        <ThemedView style={styles.button}>
+          <Link href="./not found" style={styles.buttonText}>
+            {" "}
+            Create New Trip{" "}
+          </Link>
+        </ThemedView>
       </ThemedView>
     </SafeAreaView>
   );
