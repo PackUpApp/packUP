@@ -1,10 +1,10 @@
 import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
 import { useQuery } from "@tanstack/react-query";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, SafeAreaView } from "react-native";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -24,49 +24,63 @@ export default function HomeScreen() {
   });
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={<Image source={require("@/assets/images/partial-react-logo.png")} style={styles.reactLogo} />}
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">packUP!</ThemedText>
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        <Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.headerImage} />
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Start New Trip</ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">
+            {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.button}>
+          <Link href="./questionnaire" style={styles.buttonText}>
+            {" "}
+            Create New Trip{" "}
+          </Link>
+        </ThemedView>
       </ThemedView>
-
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">
-          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
-        </ThemedText>
-        <HelloWave />
-      </ThemedView>
-
-      <ThemedView style={styles.button}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create New Trip</Text>
-        </TouchableOpacity>
-      </ThemedView>
-    </ParallaxScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    backgroundColor: "clear",
+    bottom: -250,
   },
-  stepContainer: {
+  safeArea: {
+    
+  },
+
+  Container: {
+    flex: 1,
     gap: 8,
     marginBottom: 8,
   },
   reactLogo: {
     height: 178,
     width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+    bottom: -30,
+    left: 50,
+  },
+
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    
+  },
+
+  headerImage: {
+    width: "100%",
+    height: 200,
+    marginBottom: -200,
   },
 
   button: {
+    bottom: -500,
     padding: 15,
     backgroundColor: "#add8e6",
     borderRadius: 30,
