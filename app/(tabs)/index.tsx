@@ -55,7 +55,11 @@ const styles = StyleSheet.create({
     bottom: -250,
   },
 
-  safeArea: {},
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#000000',
+    
+  },
 
   Container: {
     flex: 1,
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    
   },
 
   headerImage: {
