@@ -14,4 +14,5 @@ A simple trip and packing planning app, made for our CS-360 class.
 
 ## Tech Stack
 [Expo](https://expo.dev/) - React Native tool ecosystem & components library
+
 [packAPI](https://github.com/packupapp/packAPI) - Typescript API written with Express.js & utilizies Zod to interact with our PostreSQL database
