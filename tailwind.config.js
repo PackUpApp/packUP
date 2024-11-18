@@ -11,6 +11,17 @@ module.exports = {
         /(bg|border|text|stroke|fill)-(primary|secondary|tertiary|error|success|warning|info|typography|outline|background)-(0|50|100|200|300|400|500|600|700|800|900|950|white|gray|black|error|warning|muted|success|info|light|dark)/,
     },
   ],
+  animation: {
+    fade: 'fadeIn 3s ease-in-out',
+  },
+
+  // that is actual animation
+  keyframes: theme => ({
+    fadeIn: {
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+    },
+  }),
   theme: {
     extend: {
       colors: {
