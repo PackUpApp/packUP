@@ -10,8 +10,8 @@ export default function QuestionnaireScreen() {
   return (
     <Box>
       <SafeAreaView>
-        <Center>
-          <Text className="text-5xl m-3">
+        <Center className="mt-20">
+          <Text className="text-5xl">
             Let's get started.
           </Text>
         </Center>

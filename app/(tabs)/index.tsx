@@ -33,7 +33,7 @@ export default function HomeScreen() {
         <Box className="bg-white dark:bg-black flex-1">
           <SafeAreaView>
             <Center className="animate-fade">
-              <Image size="2xl" className="mt-6" source={require('@/assets/images/PackUp-Logo.png')}/>
+              <Image size="2xl" className="mt-6" alt="packUP Logo" source={require('@/assets/images/PackUp-Logo.png')}/>
             </Center>
             <Center className="">
               <Button size="xl" className="mt-80 h-20" onPress={newTripClick}>
