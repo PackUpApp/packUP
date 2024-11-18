@@ -1,10 +1,8 @@
-import { HelloWave } from "@/components/HelloWave";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
 import { useQuery } from "@tanstack/react-query";
-import { Image, StyleSheet, SafeAreaView } from "react-native";
-import { Link } from "expo-router";
+import { Box } from "@/components/ui/box";
+import { Center } from "@/components/ui/center";
+import { Text } from "react-native";
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -22,74 +20,12 @@ export default function HomeScreen() {
       return text;
     },
   });
-
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ThemedView style={styles.container}>
-        <Image source={require("@/assets/images/PackUp-Logo.png")} style={styles.headerImage} />
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Start New Trip</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">
-            {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
-          </ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.button}>
-          <Link href="./questionnaire" style={styles.buttonText}>
-            {" "}
-            Create New Trip{" "}
-          </Link>
-        </ThemedView>
-      </ThemedView>
-    </SafeAreaView>
+  
+      <Box className="bg-white dark:bg-black flex-1">
+        <Center>
+          <Text>Hi</Text>
+        </Center>
+      </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    backgroundColor: "clear",
-    bottom: -250,
-  },
-  safeArea: {
-    
-  },
-
-  Container: {
-    flex: 1,
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: -30,
-    left: 50,
-  },
-
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    
-  },
-
-  headerImage: {
-    width: "100%",
-    height: 200,
-    marginBottom: -200,
-  },
-
-  button: {
-    bottom: -500,
-    padding: 15,
-    backgroundColor: "#add8e6",
-    borderRadius: 30,
-    alignItems: "center",
-  },
-
-  buttonText: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: "black",
-  },
-});
