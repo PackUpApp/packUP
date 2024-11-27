@@ -32,7 +32,7 @@ export default function HomeScreen() {
   return (
         <Box className="bg-white dark:bg-black flex-1">
           <SafeAreaView>
-            <Center className="animate-fade">
+            <Center className="animate-bounce">
               <Image size="2xl" className="mt-6" alt="packUP Logo" source={require('@/assets/images/PackUp-Logo.png')}/>
             </Center>
             <Center className="">

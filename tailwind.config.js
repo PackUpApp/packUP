@@ -205,5 +205,7 @@ module.exports = {
       },
     },
   },
-  plugins: [gluestackPlugin],
+  plugins: [
+    gluestackPlugin
+  ],
 };
