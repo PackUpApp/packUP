@@ -1,9 +1,10 @@
 import { Box } from "@/components/ui/box";
 import { Center } from "@/components/ui/center";
-import { SafeAreaView, StyleSheet, Text, Switch, Button, ScrollView } from "react-native";
+import { SafeAreaView, Text, Switch, Button, ScrollView } from "react-native";
 import { Input, InputField } from "@/components/ui/input";
 import { FormControl, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control";
 import { VStack } from "@/components/ui/vstack";
+import { LinearGradient } from "@/components/ui/LinearGradient";
 import { useState } from "react";
 
 export default function QuestionnaireScreen() {
@@ -89,37 +90,16 @@ export default function QuestionnaireScreen() {
               />
             </FormControl>
 
-            {/* Nearest Airport */}
-            <FormControl size="lg" className="mx-14 mt-7">
-              <FormControlLabel>
-                <FormControlLabelText>Nearest Airport</FormControlLabelText>
-              </FormControlLabel>
-              <Input size="lg">
-                <InputField
-                  placeholder="Enter Nearest Airport"
-                  value={airport}
-                  onChangeText={(e) => setAirport(e)}
-                />
-              </Input>
-            </FormControl>
-
-            {/* Flight Time */}
-            <FormControl size="lg" className="mx-14 mt-7">
-              <FormControlLabel>
-                <FormControlLabelText>Flight Time (in hours)</FormControlLabelText>
-              </FormControlLabel>
-              <Input size="lg">
-                <InputField
-                  placeholder="Enter Flight Time"
-                  value={flightTime}
-                  onChangeText={(e) => setFlightTime(e)}
-                />
-              </Input>
-            </FormControl>
-
             {/* Submit Button */}
-            <Center className="mt-7 mb-10">
-              <Button title="Submit" onPress={handleSubmit} />
+            <Center className="m-7 mx-36 mt-10">
+              <LinearGradient
+                className="w-full rounded-full items-center py-2"
+                colors={["#8637CF", "#0F55A1"]}
+                start={[0, 1]}
+                end={[1, 0]}
+              >
+                <Text className="text-white font-semibold text-3xl" onPress={handleSubmit}>Create</Text>
+              </LinearGradient>
             </Center>
           </VStack>
         </ScrollView>
