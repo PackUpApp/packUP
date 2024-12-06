@@ -40,6 +40,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="questionnaire"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
+      <Tabs.Screen
+        name="creation"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
     </Tabs>
   );
 }

@@ -26,13 +26,13 @@ export default function HomeScreen() {
   });
 
   function newTripClick(){
-    router.navigate("../questionnaire");
+    router.navigate("./questionnaire");
   }
 
   return (
         <Box className="bg-white dark:bg-black flex-1">
           <SafeAreaView>
-            <Center className="animate-bounce">
+            <Center className="">
               <Image size="2xl" className="mt-6" alt="packUP Logo" source={require('@/assets/images/PackUp-Logo.png')}/>
             </Center>
             <Center className="">

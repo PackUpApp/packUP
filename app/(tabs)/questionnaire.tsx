@@ -14,8 +14,6 @@ export default function QuestionnaireScreen() {
   const [length, setLength] = useState("");
   const [purpose, setPurpose] = useState("");
   const [allInclusive, setAllInclusive] = useState(false);
-  const [airport, setAirport] = useState("");
-  const [flightTime, setFlightTime] = useState("");
 
   const handleSubmit = () => {
     // send to creation page
