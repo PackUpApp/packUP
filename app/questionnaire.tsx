@@ -6,6 +6,7 @@ import { FormControl, FormControlLabel, FormControlLabelText } from "@/component
 import { VStack } from "@/components/ui/vstack";
 import { LinearGradient } from "@/components/ui/LinearGradient";
 import { useState } from "react";
+import { router } from "expo-router";
 
 export default function QuestionnaireScreen() {
   // State variables for user inputs
@@ -17,15 +18,16 @@ export default function QuestionnaireScreen() {
   const [flightTime, setFlightTime] = useState("");
 
   const handleSubmit = () => {
-    // send to API
-    console.log({
-      geoRegion,
-      length,
-      purpose,
-      allInclusive,
-      airport,
-      flightTime,
-    });
+    // send to creation page
+    router.push({
+      pathname: "./creation",
+      params: {
+        geoRegion,
+        length,
+        purpose,
+        allInclusive: allInclusive ? "true" : "false"
+      }
+    })
   };
 
   return (
