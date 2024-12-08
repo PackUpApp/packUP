@@ -24,6 +24,3 @@ expo-env.d.ts
 # @end expo-cli
 
 env.json
-
-/android
-/ios
