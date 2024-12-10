@@ -2,86 +2,32 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { apiBaseUrl } from "@/constants/Host";
-import { Session, User } from "@/utils/model";
 import { loginWithGoogle } from "@/utils/oauth";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store";
-import { useEffect, useState } from "react";
+import { deleteItemAsync, setItemAsync } from "expo-secure-store";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useProfile } from "../hooks/useProfile";
+import { useSession } from "../hooks/useSession";
 
 export default function HomeScreen() {
-  const [skipFetch, setSkipFetch] = useState(false);
-  const [loginUser, setLoginUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    getItemAsync("session").then(value => {
-      if (!value) return;
-      const session = Session.safeParse(JSON.parse(value));
-      if (!session.success) return console.error(session.error);
-      if (session.data.expires.getTime() < Date.now()) return;
-      setSession(session.data);
-    });
-  }, []);
-
-  const {
-    isPending,
-    error,
-    data: user,
-  } = useQuery({
-    queryKey: ["user"],
-    async queryFn() {
-      if (skipFetch && loginUser) {
-        setSkipFetch(false);
-        return loginUser;
-      }
-
-      const res = await fetch(`${apiBaseUrl}/user/profile`, {
-        headers: new Headers({
-          Authorization: session!.token,
-        }),
-      });
-
-      if (!res.ok) throw new Error(res.statusText);
-
-      const user = (await res.json()) as User;
-      return user;
-    },
-    enabled: !!session,
-  });
-
-  const queryClient = useQueryClient();
+  const { profile, setProfile } = useProfile();
+  const { setSession } = useSession();
 
   const handleSignIn = async () => {
     try {
-      setSkipFetch(true);
       const result = await loginWithGoogle();
-      setLoginUser(result.user);
       await setItemAsync("session", JSON.stringify(result.session));
       setSession(result.session);
+      setProfile(result.user);
     } catch (e: unknown) {
       console.error("Failed to sign in with Google", e);
     }
   };
 
-  const logout = () => {
-    deleteItemAsync("session").then(() => {
-      setSession(null);
-      setLoginUser(null);
-    });
+  const logout = async () => {
+    await deleteItemAsync("session");
+    setSession(null);
+    setProfile(null);
   };
-
-  // Use useEffect to respond to state changes
-  useEffect(() => {
-    if (session === null && loginUser === null) {
-      queryClient.removeQueries({
-        exact: true,
-        queryKey: ["user"],
-      });
-      setSession(null);
-    }
-  }, [session, loginUser, queryClient]);
 
   return (
     <ParallaxScrollView
@@ -94,7 +40,7 @@ export default function HomeScreen() {
 
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">
-          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${user.fname} ${user.lname}!`}
+          {profile ? `Welcome back ${profile.fname} ${profile.lname}!` : "Not signed in."}
         </ThemedText>
         <HelloWave />
       </ThemedView>

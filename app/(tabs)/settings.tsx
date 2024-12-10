@@ -2,32 +2,17 @@ import { Collapsible } from "@/components/Collapsible";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { apiBaseUrl } from "@/constants/Host";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useQuery } from "@tanstack/react-query";
 import * as Device from "expo-device";
 import { StyleSheet } from "react-native";
 import { version } from "../../package.json";
+import { useProfile } from "../hooks/useProfile";
 
 export default function TabTwoScreen() {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["sync"],
-    async queryFn() {
-      const res = await fetch(`${apiBaseUrl}/user/b879bc2a-8817-47e6-ab12-4ad86785223e`, {
-        headers: new Headers({
-          Authorization: "Bearer 123",
-        }),
-      });
-
-      if (!res.ok) throw new Error(res.statusText);
-
-      const text = await res.json();
-      return text;
-    },
-  });
-
   const colorScheme = useColorScheme();
+  const { profile } = useProfile();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -38,11 +23,7 @@ export default function TabTwoScreen() {
       </ThemedView>
       <Collapsible title="Account">
         <ThemedText>
-          {isPending
-            ? "Loading…"
-            : error
-              ? "An error occurred!\n" + error
-              : `Welcome back ${data.fname} ${data.lname}!\nEmail: ${data.email}`}
+          {profile ? `Welcome back ${profile.fname} ${profile.lname}!\nEmail: ${profile.email}` : "Loading…"}
         </ThemedText>
       </Collapsible>
       <Collapsible title="Appearance">
