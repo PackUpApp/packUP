@@ -52,6 +52,12 @@ export default function TabLayout() {
           href: null // hides from tab bar
         }}
       />
+      <Tabs.Screen
+        name="trip"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
     </Tabs>
   );
 }

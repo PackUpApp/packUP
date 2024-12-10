@@ -29,6 +29,7 @@
     "@gluestack-ui/pressable": "^0.1.17",
     "@gluestack-ui/toast": "^1.0.8",
     "@react-navigation/native": "^7.0.0",
+    "any-date-parser": "^2.0.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~52.0.17",
     "expo-constants": "~17.0.3",
@@ -54,7 +55,8 @@
     "react-native-screens": "^4.0.0",
     "react-native-svg": "15.8.0",
     "react-native-web": "~0.19.13",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "@react-native-community/datetimepicker": "8.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
