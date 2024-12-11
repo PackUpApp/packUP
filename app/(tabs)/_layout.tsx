@@ -35,9 +35,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: "Settings",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "settings" : "settings"} color={color} />
-          ),
+          tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "settings" : "settings"} color={color} />,
         }}
       />
       <Tabs.Screen
