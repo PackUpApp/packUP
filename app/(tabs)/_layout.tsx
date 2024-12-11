@@ -38,6 +38,24 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => <TabBarIcon name={focused ? "settings" : "settings"} color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="questionnaire"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
+      <Tabs.Screen
+        name="creation"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
+      <Tabs.Screen
+        name="trip"
+        options={{
+          href: null // hides from tab bar
+        }}
+      />
     </Tabs>
   );
 }

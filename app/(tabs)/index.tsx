@@ -1,10 +1,12 @@
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { apiBaseUrl } from "@/constants/Host";
 import { useQuery } from "@tanstack/react-query";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Box } from "@/components/ui/box";
+import { Center } from "@/components/ui/center";
+import { Button, ButtonText, } from "@/components/ui/button";
+import { Image } from "@/components/ui/image";
+import { SafeAreaView } from "react-native";
+import { router } from "expo-router";
+
 
 export default function HomeScreen() {
   const { isPending, error, data } = useQuery({
@@ -23,59 +25,26 @@ export default function HomeScreen() {
     },
   });
 
+  function newTripClick(){
+    router.navigate("./questionnaire");
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={<Image source={require("@/assets/images/partial-react-logo.png")} style={styles.reactLogo} />}
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">packUP!</ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">
-          {isPending ? "Loading…" : error ? "An error occurred" : `Welcome back ${data.fname} ${data.lname}!`}
-        </ThemedText>
-        <HelloWave />
-      </ThemedView>
-
-      <ThemedView style={styles.button}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create New Trip</Text>
-        </TouchableOpacity>
-      </ThemedView>
-    </ParallaxScrollView>
+        <Box className="bg-white dark:bg-black flex-1">
+          <SafeAreaView>
+            <Center className="">
+              <Image size="2xl" className="mt-6" alt="packUP Logo" source={require('@/assets/images/PackUp-Logo.png')}/>
+            </Center>
+            <Center className="">
+              <Button size="xl" className="mt-80 h-20" onPress={newTripClick}>
+                <ButtonText className="text-4xl">
+                  Create New Trip
+                </ButtonText>
+              </Button>
+            </Center>
+          </SafeAreaView>
+        </Box>
   );
+
+
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-
-  button: {
-    padding: 15,
-    backgroundColor: "#add8e6",
-    borderRadius: 30,
-    alignItems: "center",
-  },
-
-  buttonText: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: "black",
-  },
-});
