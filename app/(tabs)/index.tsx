@@ -41,13 +41,13 @@ export default function HomeScreen() {
           <Image size="2xl" className="mt-6" alt="packUP Logo" source={require("@/assets/images/PackUp-Logo.png")} />
         </Center>
         <Center className="">
-          <Button size="xl" className="mt-80 h-20" onPress={newTripClick}>
+          <Button size="xl" className="mt-40 h-20" onPress={newTripClick}>
             <ButtonText className="text-4xl">Create New Trip</ButtonText>
           </Button>
-          <Button size="xl" className="mt-80 h-20" onPress={handleSignIn}>
+          <Button size="xl" className="mt-10 h-20" onPress={handleSignIn}>
             <ButtonText className="text-4xl">Sign in with Google</ButtonText>
           </Button>
-          <Button size="xl" className="mt-80 h-20" onPress={logout}>
+          <Button size="xl" className="mt-10 h-20" onPress={logout}>
             <ButtonText className="text-4xl">Log out</ButtonText>
           </Button>
         </Center>
