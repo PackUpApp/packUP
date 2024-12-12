@@ -1,30 +1,10 @@
-import gluestackPlugin from "@gluestack-ui/nativewind-utils/tailwind-plugin";
+import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : 'media',
-  content: [
-    "./app/**/*.{js,jsx,ts,tsx}", // Includes all subfolders in the app directory
-    "./components/**/*.{js,jsx,ts,tsx}"
-  ],
+  darkMode: "media",
+  content: ["app/**/*.{tsx,jsx,ts,js}", "components/**/*.{tsx,jsx,ts,js}"],
   presets: [require('nativewind/preset')],
-  safelist: [
-    {
-      pattern:
-        /(bg|border|text|stroke|fill)-(primary|secondary|tertiary|error|success|warning|info|typography|outline|background)-(0|50|100|200|300|400|500|600|700|800|900|950|white|gray|black|error|warning|muted|success|info|light|dark)/,
-    },
-  ],
-  animation: {
-    fade: 'fadeIn 3s ease-in-out',
-  },
-
-  // that is actual animation
-  keyframes: theme => ({
-    fadeIn: {
-      from: { opacity: 0 },
-      to: { opacity: 1 },
-    },
-  }),
   theme: {
     extend: {
       colors: {
@@ -208,7 +188,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    gluestackPlugin
-  ],
+  plugins: [gluestackPlugin],
 };

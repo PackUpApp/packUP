@@ -1,18 +1,18 @@
-module.exports = function (api) {
-  api.cache(true);
-  api.cache(true);
-  return {
-    presets: [["babel-preset-expo", {
-      jsxImportSource: "nativewind"
-    }], "nativewind/babel"],
+module.exports = function(api) {
+    api.cache(true);
 
-    plugins: [["module-resolver", {
-      root: ["./"],
+    return {
+        presets: [["babel-preset-expo", {
+            jsxImportSource: "nativewind"
+        }], "nativewind/babel"],
 
-      alias: {
-        "@": "./",
-        "tailwind.config": "./tailwind.config.js"
-      }
-    }]]
-  };
+        plugins: [["module-resolver", {
+            root: ["./"],
+
+            alias: {
+                "@": "./",
+                "tailwind.config": "./tailwind.config.js"
+            }
+        }]]
+    };
 };
