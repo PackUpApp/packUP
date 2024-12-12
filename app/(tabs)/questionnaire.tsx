@@ -1,20 +1,24 @@
 import { Box } from "@/components/ui/box";
 import { Center } from "@/components/ui/center";
-import { SafeAreaView, Text, Switch, ScrollView } from "react-native";
-import { Input, InputField } from "@/components/ui/input";
 import { FormControl, FormControlLabel, FormControlLabelText } from "@/components/ui/form-control";
-import { VStack } from "@/components/ui/vstack";
+import { Input, InputField } from "@/components/ui/input";
 import { LinearGradient } from "@/components/ui/LinearGradient";
+import { VStack } from "@/components/ui/vstack";
+import { useApi } from "@/hooks/useApi";
+import { NewTrip } from "@/utils/model";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Button, ButtonText } from "@/components/ui/button";
-import { SetStateAction, useState } from "react";
+import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
+import { useRef, useState } from "react";
+import { SafeAreaView, ScrollView, Switch, Text } from "react-native";
 
 export default function QuestionnaireScreen() {
+  const api = useApi();
   // Date/time variables
   const [tripStart, setTripStart] = useState(new Date());
   // State variables for user inputs
-  const [geoRegion, setGeoRegion] = useState("");
+  const [tripName, setTripName] = useState("");
+  const [tripClimate, setTripClimate] = useState("");
   const [length, setLength] = useState("");
   const [purpose, setPurpose] = useState("");
   const [allInclusive, setAllInclusive] = useState(false);
@@ -26,19 +30,34 @@ export default function QuestionnaireScreen() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // send to creation page
+    const trip = await api.trips.create({
+      length: parseInt(length, 10),
+      name: tripName,
+      region: tripClimate,
+      purpose: purpose,
+      all_inclusive: allInclusive,
+      start_date: tripStart,
+    } as NewTrip);
     router.push({
-      pathname: "./creation",
+      pathname: "./trip",
       params: {
-        tripStart: tripStart.toISOString(),
-        length,
-        geoRegion,
-        purpose,
-        allInclusive: allInclusive ? "true" : "false",
+        uuid: trip.trip_id,
+        showSuggestions: "true",
       },
     });
   };
+
+  const pickerRef = useRef<Picker<string>>(null);
+
+  function open() {
+    pickerRef.current?.focus();
+  }
+
+  function close() {
+    pickerRef.current?.blur();
+  }
 
   return (
     <Box>
@@ -49,14 +68,49 @@ export default function QuestionnaireScreen() {
           </Center>
 
           <VStack>
+            {/* Name */}
+            <FormControl size="lg" className="mx-14 mt-7">
+              <FormControlLabel>
+                <FormControlLabelText>Name of Trip</FormControlLabelText>
+              </FormControlLabel>
+              <Input size="lg">
+                <InputField placeholder="Name" value={tripName} onChangeText={e => setTripName(e)} />
+              </Input>
+            </FormControl>
+            {/* Climate */}
+            <FormControl size="lg" className="mx-14 mt-7">
+              <FormControlLabel>
+                <FormControlLabelText>I'm going somewhere...</FormControlLabelText>
+              </FormControlLabel>
+              <Box>
+                <Picker
+                  ref={pickerRef}
+                  selectedValue={tripClimate}
+                  onValueChange={(itemValue: string, itemIndex: number) => setTripClimate(itemValue)}
+                >
+                  <Picker.Item label="Sunny / Tropical" value="st" />
+                  <Picker.Item label="Sunny / Dry" value="sd" />
+                  <Picker.Item label="Outdoors / Wilderness (e.g. camping)" value="ow" />
+                  <Picker.Item label="Outdoors / Urban (e.g. a city)" value="ou" />
+                  <Picker.Item label="Cold (e.g. Skiing)" value="cd" />
+                  <Picker.Item label="Rainy" value="rn" />
+                </Picker>
+              </Box>
+            </FormControl>
             {/* Trip Start Date */}
-            <FormControl size="lg" className="mx-32 mt-10">
+            <FormControl size="lg" className="mx-32 mt-1">
               <Center>
                 <FormControlLabel>
                   <FormControlLabelText>Trip Start Date</FormControlLabelText>
                 </FormControlLabel>
                 <Box className="mr-5">
-                  <DateTimePicker testID="dateTimePicker" value={tripStart} mode={'date'} onChange={onChange} minimumDate={new Date()} />
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={tripStart}
+                    mode={"date"}
+                    onChange={onChange}
+                    minimumDate={new Date()}
+                  />
                 </Box>
               </Center>
             </FormControl>
@@ -67,17 +121,12 @@ export default function QuestionnaireScreen() {
                 <FormControlLabelText>Length of Stay (in days)</FormControlLabelText>
               </FormControlLabel>
               <Input size="lg">
-                <InputField placeholder="Enter Length of Stay" value={length} onChangeText={e => setLength(e)} />
-              </Input>
-            </FormControl>
-
-            {/* Geo Region */}
-            <FormControl size="lg" className="mx-14 mt-7">
-              <FormControlLabel>
-                <FormControlLabelText>Geo Region</FormControlLabelText>
-              </FormControlLabel>
-              <Input size="lg">
-                <InputField placeholder="Enter Geo Region" value={geoRegion} onChangeText={e => setGeoRegion(e)} />
+                <InputField
+                  keyboardType="number-pad"
+                  placeholder="Enter Length of Stay"
+                  value={length}
+                  onChangeText={e => setLength(e)}
+                />
               </Input>
             </FormControl>
 

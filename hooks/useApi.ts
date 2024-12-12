@@ -1,5 +1,5 @@
 import { apiBaseUrl } from "@/constants/Host";
-import { Session, User } from "@/utils/model";
+import { Item, ItemUpdate, NewTrip, Session, Trip, User } from "@/utils/model";
 import { useSession } from "./useSession";
 
 export function createClient(session: Session | null) {
@@ -25,13 +25,28 @@ export function createClient(session: Session | null) {
         },
       },
     },
-    trip: {
+    trips: {
       async get(tripId: string) {
-        return baseFetch(`/trips/${tripId}`);
+        return baseFetch<Trip>(`/trips/${tripId}`);
+      },
+      async list() {
+        return baseFetch<Trip[]>(`/trips`);
+      },
+      async create(trip: NewTrip) {
+        return baseFetch<Trip>("/trips", {
+          method: "POST",
+          body: JSON.stringify(trip),
+        });
       },
       items: {
-        async get(tripId: string) {
-          return baseFetch(`/trips/${tripId}/items`);
+        async update(tripId: string, itemId: string, item: ItemUpdate) {
+          return baseFetch<Item>(`/trips/${tripId}/items/${itemId}`, {
+            method: "PATCH",
+            body: JSON.stringify(item),
+          });
+        },
+        async getAll(tripId: string) {
+          return baseFetch<Item[]>(`/trips/${tripId}/items`);
         },
       },
     },

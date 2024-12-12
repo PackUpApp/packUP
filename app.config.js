@@ -7,11 +7,11 @@ module.exports = {
     version: "1.0.0",
     newArchEnabled: true,
     orientation: "portrait",
-    icon: "./assets/images/icon.png",
+    icon: "./assets/images/PackUp-Icon.png",
     scheme: "packup",
     userInterfaceStyle: "automatic",
     splash: {
-      image: "./assets/images/splash.png",
+      image: "./assets/images/PackUp-Icon.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
@@ -21,7 +21,7 @@ module.exports = {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: "./assets/images/PackUp-Icon.png",
         backgroundColor: "#ffffff",
       },
       package: "net.packupapp.packup",

@@ -23,11 +23,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="trip"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="trips"
         options={{
           title: "Trips",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "code-slash" : "code-slash-outline"} color={color} />
+            <TabBarIcon name={focused ? "briefcase" : "briefcase-outline"} color={color} />
           ),
         }}
       />
@@ -41,21 +47,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="questionnaire"
         options={{
-          href: null // hides from tab bar
+          href: null, // hides from tab bar
         }}
       />
       <Tabs.Screen
         name="creation"
         options={{
-          href: null // hides from tab bar
+          href: null, // hides from tab bar
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="trip"
         options={{
-          href: null // hides from tab bar
+          href: null, // hides from tab bar
         }}
-      />
+      /> */}
     </Tabs>
   );
 }
