@@ -16,7 +16,7 @@ async function initializeProfile(set: (update: User | null) => void, session: Se
 
 export const profileAtom = atom<User | null>(null);
 
-export default function useProfile() {
+export function useProfile() {
   const [profile, setProfile] = useAtom(profileAtom);
 
   return {

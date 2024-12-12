@@ -27,7 +27,7 @@ async function initializeSession(set: (update: Session | null) => void) {
 
 export const sessionAtom = atom<Session | null>(null);
 
-export default function useSession() {
+export function useSession() {
   const [session, setSession] = useAtom(sessionAtom);
 
   return { session, setSession, initializeSession: () => initializeSession(setSession) };

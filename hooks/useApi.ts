@@ -1,6 +1,6 @@
 import { apiBaseUrl } from "@/constants/Host";
 import { Session, User } from "@/utils/model";
-import useSession from "./useSession";
+import { useSession } from "./useSession";
 
 export function createClient(session: Session | null) {
   const headers = new Headers({
@@ -38,7 +38,7 @@ export function createClient(session: Session | null) {
   };
 }
 
-export default function useApi() {
+export function useApi() {
   const { session } = useSession();
 
   return createClient(session);

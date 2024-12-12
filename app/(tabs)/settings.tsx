@@ -3,11 +3,11 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useProfile } from "@/hooks/useProfile";
+import { version } from "@/package.json";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Device from "expo-device";
 import { StyleSheet } from "react-native";
-import { version } from "../../package.json";
-import useProfile from "../hooks/useProfile";
 
 export default function TabTwoScreen() {
   const colorScheme = useColorScheme();

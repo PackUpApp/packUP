@@ -2,12 +2,12 @@ import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Center } from "@/components/ui/center";
 import { Image } from "@/components/ui/image";
+import { useProfile } from "@/hooks/useProfile";
+import { useSession } from "@/hooks/useSession";
 import { loginWithGoogle } from "@/utils/oauth";
 import { router } from "expo-router";
 import { deleteItemAsync, setItemAsync } from "expo-secure-store";
 import { SafeAreaView } from "react-native";
-import useProfile from "../hooks/useProfile";
-import useSession from "../hooks/useSession";
 
 export default function HomeScreen() {
   const { profile, setProfile } = useProfile();
